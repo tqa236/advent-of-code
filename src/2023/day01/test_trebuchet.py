@@ -1,13 +1,14 @@
 import unittest
 
-from trebuchet import get_calibration_value
-
-# Tests adapted from `problem-specifications//canonical-data.json` @ v1.7.0
+from trebuchet import get_calibration_value, get_digit
 
 
-class AcronymTest(unittest.TestCase):
-    def test_basic(self):
+class Test(unittest.TestCase):
+    def test_1(self):
         self.assertEqual(get_calibration_value("d12b"), 12)
+
+    def test_2(self):
+        self.assertEqual(get_digit("one"), 1)
 
 
 if __name__ == "__main__":
