@@ -34,7 +34,6 @@ def read_input():
     file_path = "data/2023/day01/trebuchet/input1.txt"
     with open(file_path) as file:
         return file.read()
-    pass
 
 
 def get_result(case: str):
