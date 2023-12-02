@@ -37,9 +37,13 @@ def get_result(case: str):
     games = content.split("\n")
     if case == "first":
         return sum(get_game_id(game) for game in games if is_game_feasible(game))
-    return None
+    game_loads = [get_game_load(game) for game in games]
+    return sum(
+        game_load["blue"] * game_load["green"] * game_load["red"]
+        for game_load in game_loads
+    )
 
 
 if __name__ == "__main__":
     print(get_result("first"))
-    # print(get_result("second"))
+    print(get_result("second"))
