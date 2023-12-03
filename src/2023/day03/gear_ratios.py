@@ -57,6 +57,18 @@ def is_next_to_symbol(matrix, number_location):
     )
 
 
+def get_gear_locatio(matrix):
+    row_length = len(matrix)
+    column_length = len(matrix[0])
+
+    return {
+        (row, column)
+        for row in range(row_length)
+        for column in range(column_length)
+        if matrix[row][column] == "*"
+    }
+
+
 def read_input(file_path):
     with open(file_path) as file:
         return file.read()
@@ -65,6 +77,9 @@ def read_input(file_path):
 def get_result(case: str, file_path: str):
     content = read_input(file_path)
     matrix = content.split("\n")
+    row_length = len(matrix)
+    column_length = len(matrix[0])
+
     number_locations = get_number_locations(matrix)
 
     if case == "first":
@@ -76,8 +91,32 @@ def get_result(case: str, file_path: str):
             )
         )
 
+    gear_locations = get_gear_locatio(matrix)
+    gear_numbers = {}
+    for number_location in number_locations:
+        row_index, first_column_index, last_column_index = number_location
+        valid_coordinates = get_valid_coordinates(
+            row_index, first_column_index, last_column_index, row_length, column_length
+        )
+        valid_gear = gear_locations.intersection(valid_coordinates)
+        for gear in valid_gear:
+            if gear in gear_numbers:
+                gear_numbers[gear].append(
+                    int(matrix[row_index][first_column_index : last_column_index + 1])
+                )
+            else:
+                gear_numbers[gear] = [
+                    int(matrix[row_index][first_column_index : last_column_index + 1])
+                ]
+    return sum(
+        gear_numbers[gear_location][0] * gear_numbers[gear_location][1]
+        for gear_location in gear_numbers
+        if len(gear_numbers[gear_location]) == 2
+    )
+
 
 if __name__ == "__main__":
     print(get_result("first", "data/2023/day03/gear_ratios/sample.txt"))
     print(get_result("first", "data/2023/day03/gear_ratios/input1.txt"))
-    # print(get_result("second"))
+    print(get_result("second", "data/2023/day03/gear_ratios/sample.txt"))
+    print(get_result("second", "data/2023/day03/gear_ratios/input1.txt"))
