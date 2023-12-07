@@ -4,14 +4,6 @@ from functools import total_ordering
 
 CARD_TYPES = [str(i) for i in range(2, 10)] + ["T", "J", "Q", "K", "A"]
 CARD_TYPES2 = ["J"] + [str(i) for i in range(2, 10)] + ["T", "Q", "K", "A"]
-HAND_TYPES = [
-    "high_card",
-    "one_pair",
-    "two_pair",
-    "three_of_a_kind",
-    "full_house",
-    "five_of_a_kind",
-]
 
 
 @total_ordering
