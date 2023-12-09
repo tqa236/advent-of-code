@@ -6,7 +6,7 @@ def read_input(file_path):
         return file.read()
 
 
-def parse_input(case, content):
+def parse_input(content):
     instructions, matrix = content.split("\n\n")
     matrix_map = {}
     for row in matrix.split("\n"):
@@ -35,7 +35,7 @@ def get_good_steps(start, instructions, matrix_map):
 
 def get_result(case: str, file_path: str):
     content = read_input(file_path)
-    instructions, matrix_map = parse_input(case, content)
+    instructions, matrix_map = parse_input(content)
     step = 0
     destinations = (
         ["AAA"] if case == "first" else [key for key in matrix_map if key.endswith("A")]
