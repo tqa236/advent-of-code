@@ -96,16 +96,16 @@ class Graph:
     def traverse(self, start):
         self.distance[start] = {direction: [0, 0, 0] for direction in Direction}
         directions = self.get_direction(start)
-        queue = [(start, direction) for direction in directions]
+        queue = [(start, direction, 0) for direction in directions]
         while queue:
             position, direction, step = queue.pop(0)
-            valid_directions = self.get_valid_move(position, direction, step)
             print(position, direction, step)
-            print(valid_directions)
+            valid_directions = self.get_valid_move(position, direction, step)
+            if step == 2:
+                print(valid_directions)
             for new_direction in valid_directions:
                 new_position = move(position, new_direction)
                 add_new_position = False
-                print(new_direction)
                 cost = self.get_min_cost(position, step, new_direction)
                 new_cost = cost + self.matrix[new_position[0]][new_position[1]]
                 for d in Direction:
@@ -113,7 +113,6 @@ class Graph:
                         for s in range(step + 1, 3):
                             if s < 0 or s >= 3:
                                 continue
-                            # print(new_position, d, s)
                             if new_cost < self.distance[new_position][d][s]:
                                 self.distance[new_position][d][s] = new_cost
                                 add_new_position = True
@@ -123,7 +122,8 @@ class Graph:
                                 self.distance[new_position][d][s] = new_cost
                                 add_new_position = True
                 if add_new_position:
-                    queue.append((new_position, new_direction))
+                    new_step = step + 1 if new_direction == direction else 0
+                    queue.append((new_position, new_direction, new_step))
 
 
 def move(position, direction):
@@ -145,9 +145,9 @@ def get_result(case: str, file_path: str):
     graph = Graph(matrix)
     # print(graph.row, graph.column)
     graph.traverse((0, 0))
-    # for key, value in graph.distance.items():
-    #     print(key)
-    #     print(value)
+    for key, value in graph.distance.items():
+        print(key)
+        print(value)
     return graph.get_min_cost((graph.row - 1, graph.column - 1), None, None)
 
 
