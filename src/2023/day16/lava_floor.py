@@ -1,12 +1,5 @@
 from dataclasses import dataclass
 from enum import Enum
-import itertools
-
-
-@dataclass
-class position:
-    x: int
-    y: int
 
 
 class Direction(Enum):
@@ -16,12 +9,10 @@ class Direction(Enum):
     WEST = (0, -1)
 
     def turn_clockwise(self):
-        # Turning clockwise by swapping x and y and negating the new x
         new_direction = Direction((self.value[1], -self.value[0]))
         return new_direction
 
     def turn_counter_clockwise(self):
-        # Turning counter-clockwise by swapping x and y and negating the new y
         new_direction = Direction((-self.value[1], self.value[0]))
         return new_direction
 
